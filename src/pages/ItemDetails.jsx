@@ -7,7 +7,7 @@ import AuthorImage from "../images/author_thumbnail.jpg";
 import ethereumIcon from "../images/ethereum.svg";
 
 const ItemDetails = () => {
-  const { id } = useParams();
+  const { nftId } = useParams();
   const navigate = useNavigate();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -22,14 +22,14 @@ const ItemDetails = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log("🧭 ItemDetails mounted with ID:", id);
+    console.log("🧭 ItemDetails mounted with ID:", nftId);
 
     const fetchItemDetails = async () => {
       try {
         console.log("📡 Fetching item from API...");
-        // The id parameter could be either the nftId or id depending on where the user came from
+        // Using nftId consistently for API calls
         const response = await axios.get(
-          `https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${id}`
+          `https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${nftId}`
         );
 
         console.log("✅ API Response:", response.data);
@@ -54,14 +54,14 @@ const ItemDetails = () => {
       }
     };
 
-    if (id) {
+    if (nftId) {
       fetchItemDetails();
     } else {
       console.warn("⚠️ No ID found in route params.");
       setError(true);
       setLoading(false);
     }
-  }, [id]);
+  }, [nftId]);
 
   // Countdown format: hours and minutes remaining
   const formatCountdown = (expiryDate) => {

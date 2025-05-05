@@ -133,21 +133,21 @@ const ExploreItems = () => {
                     <div className="nft__item_share">
                       <h4>Share</h4>
                       <a
-                        href={`https://facebook.com/sharer/sharer.php?u=https://nftsite.com/item/${item.id}`}
+                        href={`https://facebook.com/sharer/sharer.php?u=https://nftsite.com/item/${item.nftId || item.id}`}
                         target="_blank"
                         rel="noreferrer"
                       >
                         <i className="fa fa-facebook fa-lg"></i>
                       </a>
                       <a
-                        href={`https://twitter.com/intent/tweet?url=https://nftsite.com/item/${item.id}`}
+                        href={`https://twitter.com/intent/tweet?url=https://nftsite.com/item/${item.nftId || item.id}`}
                         target="_blank"
                         rel="noreferrer"
                       >
                         <i className="fa fa-twitter fa-lg"></i>
                       </a>
                       <a
-                        href={`mailto:?subject=Check out this NFT&body=https://nftsite.com/item/${item.id}`}
+                        href={`mailto:?subject=Check out this NFT&body=https://nftsite.com/item/${item.nftId || item.id}`}
                       >
                         <i className="fa fa-envelope fa-lg"></i>
                       </a>
@@ -155,7 +155,7 @@ const ExploreItems = () => {
                   </div>
                 </div>
 
-                <Link to={`/item-details/${item.id}`}>
+                <Link to={`/item-details/${item.nftId || item.id}`}>
                   <img
                     src={item.nftImage || nftImage}
                     className="lazy nft__item_preview"
@@ -165,7 +165,7 @@ const ExploreItems = () => {
               </div>
 
               <div className="nft__item_info">
-                <Link to={`/item-details/${item.id}`}>
+                <Link to={`/item-details/${item.nftId || item.id}`}>
                   <h4>{item.title || "Item Name"}</h4>
                 </Link>
                 <div className="nft__item_price">

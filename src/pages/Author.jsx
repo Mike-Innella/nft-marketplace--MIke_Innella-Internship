@@ -18,7 +18,11 @@ const Author = () => {
 
   useEffect(() => {
     const fetchAuthorData = async () => {
-      if (!authorId) return;
+      if (!authorId) {
+        // If no authorId is provided, just use the default author data
+        setLoading(false);
+        return;
+      }
       
       try {
         const response = await axios.get(
