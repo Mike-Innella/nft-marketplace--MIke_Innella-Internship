@@ -1,10 +1,55 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
+import AOS from "aos"; // Import AOS JS
+import "aos/dist/aos.css"; // Import AOS CSS
 import { Link } from "react-router-dom";
 import Logo from "../images/Ultraverse.png";
 
 const Footer = () => {
+  // State to track if Footer has been scrolled into view
+  const [fadeIn, setFadeIn] = useState(false);
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    // Initialize AOS
+    AOS.init({
+      duration: 1000, // Duration of the animation
+      once: true, // Animation happens only once
+    });
+
+    window.scrollTo(0, 0); // Optionally reset the scroll position on mount
+
+    // Intersection Observer to trigger fade-in effect when in view
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setFadeIn(true);
+            observer.unobserve(entry.target); // Stop observing once triggered
+          }
+        });
+      },
+      { threshold: 0.92 }
+    );
+
+    if (footerRef.current) {
+      observer.observe(footerRef.current); // Start observing the footer
+    }
+
+    // Cleanup observer on component unmount
+    return () => {
+      if (footerRef.current) observer.unobserve(footerRef.current);
+    };
+  }, []);
+
   return (
-    <footer className="footer-light">
+    <footer
+      ref={footerRef}
+      className="footer-light"
+      style={{
+        opacity: fadeIn ? 1 : 0,
+        transition: "all 800ms ease-in-out",
+      }}
+    >
       <div className="container">
         <div className="row">
           <div className="col-md-3 col-sm-6 col-xs-1">

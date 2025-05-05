@@ -1,7 +1,7 @@
 :root {
   --primary-color: #232749;
-  --primary-color-rgb: 35, 39, 73;
+  --primary-color-rgb: rgba(35, 39, 73);
 
   --secondary-color: #7366F0;
-  --secondary-color-rgb: 115, 102, 240;
+  --secondary-color-rgb: rgba(115, 102, 240);
 }
