@@ -1,3 +1,4 @@
+import React from "react";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
@@ -8,9 +9,9 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <Router>
       <Nav />
-      <Routes>
+      <Routes v7_startTransition={true} v7_relativeSplatPath={true}>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/author" element={<Author />} />
