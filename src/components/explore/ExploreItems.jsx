@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios"; // Import axios for API calls
-import SkeletonCard from "../UI/SkeletonCard"; // Import the skeleton card component
+import SkeletonCard from "../UI/SkeletonCard";
 
 const ExploreItems = () => {
   const [items, setItems] = useState([]); // State to store fetched items
@@ -23,7 +23,7 @@ const ExploreItems = () => {
       // Log the first item to inspect its structure
       if (Array.isArray(response.data) && response.data.length > 0) {
         console.log("First item structure:", response.data[0]);
-        
+
         // Add a 1.2s delay to allow skeleton shimmer to display
         setTimeout(() => {
           setItems(response.data); // Update state with fetched items
@@ -87,8 +87,8 @@ const ExploreItems = () => {
         // Show skeleton cards while loading
         <div className="row">
           {[...Array(8)].map((_, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
               style={{ display: "block", marginBottom: "30px" }}
             >
