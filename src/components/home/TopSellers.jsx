@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
 import axios from "axios";
 
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-
-import SkeletonCard from "../UI/SkeletonCard";
 import AuthorImage from "../../images/author_thumbnail.jpg";
+import SkeletonCard from "../UI/SkeletonCard";
 
 const TopSellers = () => {
   const [sellers, setSellers] = useState([]);
@@ -21,8 +15,11 @@ const TopSellers = () => {
         const response = await axios.get(
           "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"
         );
-        setSellers(response.data);
-        setTimeout(() => setLoading(false), 1200); // <-- delay loading flag
+
+        const sorted = response.data.sort((a, b) => b.price - a.price);
+        setSellers(sorted);
+
+        setTimeout(() => setLoading(false), 1200); // delay to show skeleton
       } catch (error) {
         console.error("Failed to fetch top sellers:", error);
         setLoading(false);
@@ -43,58 +40,34 @@ const TopSellers = () => {
             </div>
           </div>
           <div className="col-md-12">
-            <Swiper
-              spaceBetween={16}
-              slidesPerView={6}
-              navigation
-              pagination={{ clickable: true }}
-              modules={[Navigation, Pagination]}
-              breakpoints={{
-                0: { slidesPerView: 2 },
-                576: { slidesPerView: 3 },
-                768: { slidesPerView: 4 },
-                992: { slidesPerView: 5 },
-                1200: { slidesPerView: 6 },
-              }}
-            >
+            <ol className="author_list">
               {loading
-                ? Array.from({ length: 12 }).map((_, index) => (
-                    <SwiperSlide key={index}>
+                ? new Array(12).fill(0).map((_, index) => (
+                    <li key={index}>
                       <SkeletonCard />
-                    </SwiperSlide>
+                    </li>
                   ))
                 : sellers.map((seller, index) => (
-                    <SwiperSlide key={index}>
-                      <div
-                        className="top-sellers__card"
-                        style={{
-                          height: "128px",
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                          borderRadius: "12px",
-                        }}
-                      >
-                        <div className="author_list_pp">
-                          <Link to={`/author/${seller.authorId}`}>
-                            <img
-                              className="lazy pp-author"
-                              src={seller.authorImage || AuthorImage}
-                              alt={seller.authorName}
-                            />
-                            <i className="fa fa-check"></i>
-                          </Link>
-                        </div>
-                        <div className="author_list_info">
-                          <Link to={`/author/${seller.authorId}`}>
-                            {seller.authorName}
-                          </Link>
-                          <span>{seller.price} ETH</span>
-                        </div>
+                    <li key={seller.authorId || index}>
+                      <div className="author_list_pp">
+                        <Link to={`/author/${seller.authorId}`}>
+                          <img
+                            className="lazy pp-author"
+                            src={seller.authorImage || AuthorImage}
+                            alt={seller.authorName}
+                          />
+                          <i className="fa fa-check"></i>
+                        </Link>
                       </div>
-                    </SwiperSlide>
+                      <div className="author_list_info">
+                        <Link to={`/author/${seller.authorId}`}>
+                          {seller.authorName}
+                        </Link>
+                        <span>{seller.price} ETH</span>
+                      </div>
+                    </li>
                   ))}
-            </Swiper>
+            </ol>
           </div>
         </div>
       </div>
