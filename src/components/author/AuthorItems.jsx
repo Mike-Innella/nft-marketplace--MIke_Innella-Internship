@@ -117,7 +117,7 @@ const AuthorItems = ({ authorId = "73855012", authorImage = AuthorImage }) => {
                       </div>
                     </div>
                     
-                    <Link to={`/item-details/${item.id}`}>
+                    <Link to={`/item-details/${item.nftId || item.id}`}>
                       <img
                         src={item.nftImage || nftImage}
                         className="lazy nft__item_preview"
@@ -127,7 +127,7 @@ const AuthorItems = ({ authorId = "73855012", authorImage = AuthorImage }) => {
                   </div>
                   
                   <div className="nft__item_info">
-                    <Link to={`/item-details/${item.id}`}>
+                    <Link to={`/item-details/${item.nftId || item.id}`}>
                       <h4>{item.title || "Item Name"}</h4>
                     </Link>
                     <div className="nft__item_price">
