@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import AuthorImage from "../../images/author_thumbnail.jpg";
-import SkeletonCard from "../UI/SkeletonCard";
+import TopSellersSkeleton from "../UI/TopSellersSkeleton";
 
 const TopSellers = () => {
   const [sellers, setSellers] = useState([]);
@@ -44,7 +44,7 @@ const TopSellers = () => {
               {loading
                 ? new Array(12).fill(0).map((_, index) => (
                     <li key={index}>
-                      <SkeletonCard />
+                      <TopSellersSkeleton />
                     </li>
                   ))
                 : sellers.map((seller, index) => (

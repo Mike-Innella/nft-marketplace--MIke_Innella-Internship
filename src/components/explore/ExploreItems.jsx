@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios"; // Import axios for API calls
-import SkeletonCard from "../UI/SkeletonCard";
+import ExploreItemsSkeleton from "../UI/ExploreItemsSkeleton";
 
 const ExploreItems = () => {
   const [items, setItems] = useState([]); // State to store fetched items
   const [filter, setFilter] = useState(""); // State to store the selected filter
   const [loading, setLoading] = useState(true); // State to track loading status
   const [now, setNow] = useState(Date.now()); // Live ticking clock to update countdowns every second
-  const [visibleItemsCount, setVisibleItemsCount] = useState(4); // State to control the number of visible items
+  const [visibleItemsCount, setVisibleItemsCount] = useState(8); // State to control the number of visible items
 
   // Function to fetch data based on filter
   const fetchItems = async () => {
@@ -41,11 +41,13 @@ const ExploreItems = () => {
 
   // Countdown format: hours and minutes remaining
   const formatCountdown = (expiryDate) => {
+    if (!expiryDate) return null;
     const end = new Date(expiryDate).getTime();
     const diff = Math.max(0, end - now);
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    return `${hours}h ${minutes}m`;
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    return `${hours}h ${minutes}m ${seconds}s`;
   };
 
   // Live update of time
@@ -92,7 +94,7 @@ const ExploreItems = () => {
               className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
               style={{ display: "block", marginBottom: "30px" }}
             >
-              <SkeletonCard />
+              <ExploreItemsSkeleton />
             </div>
           ))}
         </div>
@@ -133,21 +135,27 @@ const ExploreItems = () => {
                     <div className="nft__item_share">
                       <h4>Share</h4>
                       <a
-                        href={`https://facebook.com/sharer/sharer.php?u=https://nftsite.com/item/${item.nftId || item.id}`}
+                        href={`https://facebook.com/sharer/sharer.php?u=https://nftsite.com/item/${
+                          item.nftId || item.id
+                        }`}
                         target="_blank"
                         rel="noreferrer"
                       >
                         <i className="fa fa-facebook fa-lg"></i>
                       </a>
                       <a
-                        href={`https://twitter.com/intent/tweet?url=https://nftsite.com/item/${item.nftId || item.id}`}
+                        href={`https://twitter.com/intent/tweet?url=https://nftsite.com/item/${
+                          item.nftId || item.id
+                        }`}
                         target="_blank"
                         rel="noreferrer"
                       >
                         <i className="fa fa-twitter fa-lg"></i>
                       </a>
                       <a
-                        href={`mailto:?subject=Check out this NFT&body=https://nftsite.com/item/${item.nftId || item.id}`}
+                        href={`mailto:?subject=Check out this NFT&body=https://nftsite.com/item/${
+                          item.nftId || item.id
+                        }`}
                       >
                         <i className="fa fa-envelope fa-lg"></i>
                       </a>
@@ -185,11 +193,13 @@ const ExploreItems = () => {
       )}
 
       {/* Load More Button */}
-      <div className="col-md-12 text-center">
-        <button onClick={loadMore} id="loadmore" className="btn-main lead">
-          Load more
-        </button>
-      </div>
+      {visibleItemsCount < items.length && (
+        <div className="col-md-12 text-center">
+          <button onClick={loadMore} id="loadmore" className="btn-main lead">
+            Load more
+          </button>
+        </div>
+      )}
     </>
   );
 };
