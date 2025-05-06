@@ -1,4 +1,5 @@
 import React from "react";
+import "../../css/burgerCSSFix.css"
 
 const HeaderExplore = () => {
   return (
@@ -18,11 +19,11 @@ const HeaderExplore = () => {
               name="name_1"
               placeholder="search item here..."
               type="text"
-            />{" "}
+            />
             <a href="#" id="btn-submit">
-              <i className="fa fa-search bg-color-secondary"></i>
+              <i className="fa fa-search bg-color-secondary" />
             </a>
-            <div className="clearfix"></div>
+            <div className="clearfix" />
           </div>
         </form>
 

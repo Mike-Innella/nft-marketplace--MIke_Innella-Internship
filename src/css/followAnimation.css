@@ -1,0 +1,31 @@
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 4px #0f0;
+  }
+  50% {
+    box-shadow: 0 0 12px #0f0;
+  }
+  100% {
+    box-shadow: 0 0 4px #0f0;
+  }
+}
+
+.btn-main {
+  transition: all 400ms ease;
+}
+
+.btn-main.following {
+  transform: scale(1.05);
+  background-color: #222;
+  color: #fff;
+  box-shadow: 0 0 16px 16px #0f0;
+  animation: pulseGlow 1.2s ease forwards;
+}
+
+.btn-main:hover {
+  background-color: #13004daf;
+}
+
+.btn-main:active {
+  transform: scale(0.95);
+}

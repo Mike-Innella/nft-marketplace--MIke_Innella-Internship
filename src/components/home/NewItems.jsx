@@ -8,7 +8,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import SkeletonCard from "../UI/SkeletonCard";
+import NewItemsSkeleton from "../UI/NewItemsSkeleton";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 
@@ -73,7 +73,7 @@ const NewItems = () => {
           {loading
             ? new Array(4).fill(0).map((_, i) => (
                 <SwiperSlide key={`skeleton-${i}`}>
-                  <SkeletonCard />
+                  <NewItemsSkeleton />
                 </SwiperSlide>
               ))
             : items.map((item, index) => (
@@ -108,21 +108,27 @@ const NewItems = () => {
                           <div className="nft__item_share">
                             <h4>Share</h4>
                             <a
-                              href={`https://facebook.com/sharer/sharer.php?u=https://nftsite.com/item/${item.nftId || item.id}`}
+                              href={`https://facebook.com/sharer/sharer.php?u=https://nftsite.com/item/${
+                                item.nftId || item.id
+                              }`}
                               target="_blank"
                               rel="noreferrer"
                             >
                               <i className="fa fa-facebook fa-lg"></i>
                             </a>
                             <a
-                              href={`https://twitter.com/intent/tweet?url=https://nftsite.com/item/${item.nftId || item.id}`}
+                              href={`https://twitter.com/intent/tweet?url=https://nftsite.com/item/${
+                                item.nftId || item.id
+                              }`}
                               target="_blank"
                               rel="noreferrer"
                             >
                               <i className="fa fa-twitter fa-lg"></i>
                             </a>
                             <a
-                              href={`mailto:?subject=Check out this NFT&body=https://nftsite.com/item/${item.nftId || item.id}`}
+                              href={`mailto:?subject=Check out this NFT&body=https://nftsite.com/item/${
+                                item.nftId || item.id
+                              }`}
                             >
                               <i className="fa fa-envelope fa-lg"></i>
                             </a>

@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import SkeletonCard from "../UI/SkeletonCard";
+import HotCollectionsSkeleton from "../UI/HotCollectionsSkeleton";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 
@@ -59,7 +59,7 @@ const HotCollections = () => {
           {loading
             ? new Array(4).fill(0).map((_, i) => (
                 <SwiperSlide key={`skeleton-${i}`}>
-                  <SkeletonCard />
+                  <HotCollectionsSkeleton />
                 </SwiperSlide>
               ))
             : collections.map((item, index) => (

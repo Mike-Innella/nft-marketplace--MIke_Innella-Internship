@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import Skeleton from "../components/UI/Skeleton";
+import ItemDetailsSkeleton from "../components/UI/ItemDetailsSkeleton";
 import nftImage from "../images/nftImage.jpg";
 import AuthorImage from "../images/author_thumbnail.jpg";
 import ethereumIcon from "../images/ethereum.svg";
@@ -66,12 +66,12 @@ const ItemDetails = () => {
   // Countdown format: hours and minutes remaining
   const formatCountdown = (expiryDate) => {
     if (!expiryDate) return null;
-    
     const end = new Date(expiryDate).getTime();
     const diff = Math.max(0, end - now);
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    return `${hours}h ${minutes}m`;
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    return `${hours}h ${minutes}m ${seconds}s`;
   };
 
   if (error) {
@@ -84,7 +84,9 @@ const ItemDetails = () => {
             <div className="row">
               <div className="col-md-12 text-center">
                 <h2>⚠️ This NFT could not be found</h2>
-                <p>The item you're looking for doesn't exist or has been removed.</p>
+                <p>
+                  The item you're looking for doesn't exist or has been removed.
+                </p>
                 <button className="btn-main" onClick={() => navigate(-1)}>
                   ← Go Back
                 </button>
@@ -97,38 +99,7 @@ const ItemDetails = () => {
   }
 
   if (loading) {
-    console.log("⏳ Rendering skeleton loading state...");
-    return (
-      <div className="no-bottom no-top" id="content">
-        <div id="top"></div>
-        <section aria-label="section" className="mt90 sm-mt-0">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6">
-                <Skeleton width="100%" height="450px" borderRadius="8px" />
-              </div>
-              <div className="col-md-6">
-                <Skeleton width="70%" height="40px" borderRadius="8px" />
-                <div className="spacer-10"></div>
-                <div className="item_info">
-                  <div className="de_tab tab_simple">
-                    <Skeleton width="100%" height="20px" />
-                    <div className="spacer-10"></div>
-                    <Skeleton width="60%" height="20px" />
-                    <div className="spacer-20"></div>
-                    <Skeleton width="40%" height="20px" />
-                    <div className="spacer-10"></div>
-                    <Skeleton width="80%" height="20px" />
-                    <div className="spacer-20"></div>
-                    <Skeleton width="30%" height="50px" borderRadius="30px" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    );
+    return <ItemDetailsSkeleton />;
   }
 
   console.log("🖼️ Rendering item details:", item);
@@ -171,10 +142,10 @@ const ItemDetails = () => {
                     <div className="item_author">
                       <div className="author_list_pp">
                         <Link to={`/author/${item.ownerId}`}>
-                          <img 
-                            className="lazy" 
-                            src={item.ownerImage || AuthorImage} 
-                            alt={item.ownerName || "Owner"} 
+                          <img
+                            className="lazy"
+                            src={item.ownerImage || AuthorImage}
+                            alt={item.ownerName || "Owner"}
                           />
                           <i className="fa fa-check"></i>
                         </Link>
@@ -191,10 +162,10 @@ const ItemDetails = () => {
                     <div className="item_author">
                       <div className="author_list_pp">
                         <Link to={`/author/${item.creatorId}`}>
-                          <img 
-                            className="lazy" 
-                            src={item.creatorImage || AuthorImage} 
-                            alt={item.creatorName || "Creator"} 
+                          <img
+                            className="lazy"
+                            src={item.creatorImage || AuthorImage}
+                            alt={item.creatorName || "Creator"}
                           />
                           <i className="fa fa-check"></i>
                         </Link>
@@ -219,7 +190,10 @@ const ItemDetails = () => {
                     <div className="d-flex flex-row">
                       <button className="btn-main">Buy Now</button>
                       <div className="spacer-10"></div>
-                      <button className="btn-main btn-light" onClick={() => navigate(-1)}>
+                      <button
+                        className="btn-main btn-light"
+                        onClick={() => navigate(-1)}
+                      >
                         Go Back
                       </button>
                     </div>
